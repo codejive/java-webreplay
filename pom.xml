@@ -22,10 +22,12 @@
         <!-- Dependency versions -->
         <version.tproxy>0.0.1-SNAPSHOT</version.tproxy>
         <version.jspecify>1.0.0</version.jspecify>
+        <version.gson>2.11.0</version.gson>
         
         <!-- Test dependency versions -->
         <version.junit>5.11.4</version.junit>
         <version.assertj>3.27.7</version.assertj>
+        <version.wiremock>3.10.0</version.wiremock>
         
         <!-- Plugin versions -->
         <version.spotless>2.43.0</version.spotless>
@@ -57,6 +59,11 @@
             <artifactId>jspecify</artifactId>
             <version>${version.jspecify}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${version.gson}</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
@@ -68,6 +75,12 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${version.assertj}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${version.wiremock}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
