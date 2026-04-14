@@ -170,6 +170,30 @@ public class WebReplayProxy {
         return store;
     }
 
+    /**
+     * Get a ProxySelector configured to use this proxy.
+     *
+     * <p>Delegates to the underlying {@link HttpProxy#asProxySelector()}.
+     *
+     * <p>Use this to configure HTTP clients or set as the system default:
+     *
+     * <pre>{@code
+     * // Configure a specific HttpClient
+     * HttpClient client = HttpClient.newBuilder()
+     *     .proxy(proxy.asProxySelector())
+     *     .build();
+     *
+     * // Or set as system default
+     * ProxySelector.setDefault(proxy.asProxySelector());
+     * }</pre>
+     *
+     * @return a ProxySelector that routes traffic through this proxy
+     * @throws IllegalStateException if the proxy is not running
+     */
+    public java.net.ProxySelector asProxySelector() {
+        return httpProxy.asProxySelector();
+    }
+
     private static RequestResponseStore createStore(Builder builder) throws IOException {
         if (builder.store != null) {
             return builder.store;

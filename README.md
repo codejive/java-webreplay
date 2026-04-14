@@ -320,7 +320,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
-import java.net.InetSocketAddress;
 
 WebReplayProxy proxy = WebReplayProxy.builder()
     .mode(ReplayMode.CACHE)
@@ -328,11 +327,14 @@ WebReplayProxy proxy = WebReplayProxy.builder()
     .build();
 proxy.start(8080);
 
-// Configure HttpClient to use the proxy
+// Option 1: Configure a specific HttpClient
 HttpClient client = HttpClient.newBuilder()
-    .proxy(java.net.ProxySelector.of(
-        new InetSocketAddress("localhost", 8080)))
+    .proxy(proxy.asProxySelector())
     .build();
+
+// Option 2: Set as system default for all HttpClient instances
+java.net.ProxySelector.setDefault(proxy.asProxySelector());
+HttpClient client = HttpClient.newHttpClient(); // Uses system default
 
 HttpRequest request = HttpRequest.newBuilder()
     .uri(URI.create("https://api.example.com/users"))
