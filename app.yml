@@ -1,0 +1,21 @@
+name: java-webreplay
+description: A library for recording and replaying web traffic for testing purposes.
+documentation: |
+  # Java Web Replay
+
+  A library for recording and replaying web traffic for testing purposes. Built on top of [java-tproxy](https://github.com/codejive/java-tproxy), it provides a simple way to record HTTP/HTTPS traffic and replay it later for deterministic testing.
+authors:
+- Tako Schotanus (tako@codejive.org)
+contributors:
+- copilot
+links:
+  homepage: https://github.com/codejive/java-webreplay
+  repository: https://github.com/codejive/java-webreplay
+  documentation: https://github.com/codejive/java-webreplay/blob/main/README.md
+java: 21
+dependencies:
+actions:
+  clean: ./mvnw clean
+  build: ./mvnw spotless:apply package -DskipTests
+  test: ./mvnw test
+  format: ./mvnw spotless:apply

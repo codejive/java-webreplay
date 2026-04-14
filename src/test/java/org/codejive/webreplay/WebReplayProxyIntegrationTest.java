@@ -72,7 +72,7 @@ class WebReplayProxyIntegrationTest {
 
         // Execute
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/test"),
                         Headers.of("User-Agent", "TestClient"),
@@ -104,7 +104,7 @@ class WebReplayProxyIntegrationTest {
                         .willReturn(aResponse().withStatus(200).withBody("original response")));
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/cached"),
                         Headers.empty(),
@@ -141,7 +141,7 @@ class WebReplayProxyIntegrationTest {
                         .willReturn(aResponse().withStatus(200).withBody("new response")));
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/new"),
                         Headers.empty(),
@@ -168,7 +168,7 @@ class WebReplayProxyIntegrationTest {
                         .willReturn(aResponse().withStatus(200).withBody("should not see this")));
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/missing"),
                         Headers.empty(),
@@ -197,7 +197,7 @@ class WebReplayProxyIntegrationTest {
                         .willReturn(aResponse().withStatus(200).withBody("recorded response")));
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/replay"),
                         Headers.empty(),
@@ -253,7 +253,7 @@ class WebReplayProxyIntegrationTest {
                         .willReturn(aResponse().withStatus(200).withBody("test")));
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://127.0.0.1:" + BACKEND_PORT + "/api/clear"),
                         Headers.empty(),

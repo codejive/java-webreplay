@@ -17,10 +17,10 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
 
         assertThat(matcher.matches(request1, request2)).isTrue();
@@ -32,10 +32,10 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST", URI.create("http://example.com/api"), Headers.empty(), null);
 
         assertThat(matcher.matches(request1, request2)).isFalse();
@@ -47,10 +47,10 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/other"), Headers.empty(), null);
 
         assertThat(matcher.matches(request1, request2)).isFalse();
@@ -62,10 +62,10 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api?a=1&b=2"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api?b=2&a=1"), Headers.empty(), null);
 
         // Note: Query parameters order matters in URIs, so this will be false
@@ -80,13 +80,13 @@ class DefaultRequestMatcherTest {
                 DefaultRequestMatcher.builder().matchHeader("Authorization").build();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("Authorization", "Bearer token123"),
                         null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("Authorization", "Bearer token123"),
@@ -102,13 +102,13 @@ class DefaultRequestMatcherTest {
                 DefaultRequestMatcher.builder().matchHeader("Authorization").build();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("Authorization", "Bearer token123"),
                         null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("Authorization", "Bearer token456"),
@@ -123,13 +123,13 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.builder().matchBody().build();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),
                         "request body".getBytes());
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),
@@ -144,13 +144,13 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.builder().matchBody().build();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),
                         "body1".getBytes());
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),
@@ -165,13 +165,13 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("User-Agent", "Browser1"),
                         null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET",
                         URI.create("http://example.com/api"),
                         Headers.of("User-Agent", "Browser2"),
@@ -186,13 +186,13 @@ class DefaultRequestMatcherTest {
         RequestMatcher matcher = DefaultRequestMatcher.methodAndUri();
 
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),
                         "body1".getBytes());
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.empty(),

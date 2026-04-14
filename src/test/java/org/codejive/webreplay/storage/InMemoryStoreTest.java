@@ -39,10 +39,10 @@ class InMemoryStoreTest {
     @DisplayName("Should save and retrieve exchange")
     void shouldSaveAndRetrieve() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyResponse response =
-                new ProxyResponse(
+                ProxyResponse.fromBytes(
                         200, Headers.of("Content-Type", "application/json"), "{}".getBytes());
         RecordedExchange exchange = new RecordedExchange(request, response);
 
@@ -59,15 +59,15 @@ class InMemoryStoreTest {
     @DisplayName("Should not find non-matching request")
     void shouldNotFindNonMatching() throws Exception {
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyResponse response =
-                new ProxyResponse(
+                ProxyResponse.fromBytes(
                         200, Headers.of("Content-Type", "application/json"), "{}".getBytes());
         store.save(new RecordedExchange(request1, response));
 
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/other"), Headers.empty(), null);
         Optional<RecordedExchange> found = store.find(request2, matcher);
 
@@ -78,12 +78,12 @@ class InMemoryStoreTest {
     @DisplayName("Should list all exchanges")
     void shouldListAll() throws Exception {
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api1"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api2"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), new byte[0]);
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), new byte[0]);
 
         store.save(new RecordedExchange(request1, response));
         store.save(new RecordedExchange(request2, response));
@@ -96,9 +96,9 @@ class InMemoryStoreTest {
     @DisplayName("Should clear all exchanges")
     void shouldClear() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), new byte[0]);
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), new byte[0]);
         store.save(new RecordedExchange(request, response));
 
         assertThat(store.count()).isEqualTo(1);
@@ -113,10 +113,12 @@ class InMemoryStoreTest {
     @DisplayName("Should handle multiple saves of same request")
     void shouldHandleMultipleSaves() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
-        ProxyResponse response1 = new ProxyResponse(200, Headers.empty(), "response1".getBytes());
-        ProxyResponse response2 = new ProxyResponse(200, Headers.empty(), "response2".getBytes());
+        ProxyResponse response1 =
+                ProxyResponse.fromBytes(200, Headers.empty(), "response1".getBytes());
+        ProxyResponse response2 =
+                ProxyResponse.fromBytes(200, Headers.empty(), "response2".getBytes());
 
         store.save(new RecordedExchange(request, response1, Instant.now()));
         store.save(new RecordedExchange(request, response2, Instant.now()));

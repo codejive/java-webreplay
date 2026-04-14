@@ -102,7 +102,7 @@ class ExchangeJsonSerializer {
             URI uri = URI.create(obj.get("uri").getAsString());
             Headers headers = context.deserialize(obj.get("headers"), Headers.class);
             byte[] body = Base64.getDecoder().decode(obj.get("body").getAsString());
-            return new ProxyRequest(method, uri, headers, body);
+            return ProxyRequest.fromBytes(method, uri, headers, body);
         }
     }
 
@@ -127,7 +127,7 @@ class ExchangeJsonSerializer {
             int statusCode = obj.get("statusCode").getAsInt();
             Headers headers = context.deserialize(obj.get("headers"), Headers.class);
             byte[] body = Base64.getDecoder().decode(obj.get("body").getAsString());
-            return new ProxyResponse(statusCode, headers, body);
+            return ProxyResponse.fromBytes(statusCode, headers, body);
         }
     }
 

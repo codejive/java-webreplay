@@ -52,10 +52,10 @@ class FileSystemStoreTest {
     @DisplayName("Should save and retrieve exchange")
     void shouldSaveAndRetrieve() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
         ProxyResponse response =
-                new ProxyResponse(
+                ProxyResponse.fromBytes(
                         200, Headers.of("Content-Type", "application/json"), "{}".getBytes());
         RecordedExchange exchange = new RecordedExchange(request, response);
 
@@ -76,9 +76,9 @@ class FileSystemStoreTest {
     @DisplayName("Should persist across store instances")
     void shouldPersist() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), "test".getBytes());
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), "test".getBytes());
 
         store.save(new RecordedExchange(request, response));
 
@@ -97,9 +97,9 @@ class FileSystemStoreTest {
         FileSystemStore customStore = new FileSystemStore(tempDir, customStrategy);
 
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), new byte[0]);
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), new byte[0]);
 
         customStore.save(new RecordedExchange(request, response));
 
@@ -112,12 +112,12 @@ class FileSystemStoreTest {
     @DisplayName("Should list all exchanges")
     void shouldListAll() throws Exception {
         ProxyRequest request1 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api1"), Headers.empty(), null);
         ProxyRequest request2 =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api2"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), new byte[0]);
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), new byte[0]);
 
         store.save(new RecordedExchange(request1, response));
         store.save(new RecordedExchange(request2, response));
@@ -130,9 +130,9 @@ class FileSystemStoreTest {
     @DisplayName("Should clear all files")
     void shouldClear() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "GET", URI.create("http://example.com/api"), Headers.empty(), null);
-        ProxyResponse response = new ProxyResponse(200, Headers.empty(), new byte[0]);
+        ProxyResponse response = ProxyResponse.fromBytes(200, Headers.empty(), new byte[0]);
 
         store.save(new RecordedExchange(request, response));
         assertThat(store.count()).isEqualTo(1);
@@ -147,7 +147,7 @@ class FileSystemStoreTest {
     @DisplayName("Should preserve headers and body")
     void shouldPreserveData() throws Exception {
         ProxyRequest request =
-                new ProxyRequest(
+                ProxyRequest.fromBytes(
                         "POST",
                         URI.create("http://example.com/api"),
                         Headers.of(
@@ -157,7 +157,7 @@ class FileSystemStoreTest {
                                 "Bearer token"),
                         "{\"key\":\"value\"}".getBytes());
         ProxyResponse response =
-                new ProxyResponse(
+                ProxyResponse.fromBytes(
                         201, Headers.of("Location", "/resource/123"), "{\"id\":123}".getBytes());
 
         store.save(new RecordedExchange(request, response));

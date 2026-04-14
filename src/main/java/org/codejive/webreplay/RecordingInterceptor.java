@@ -125,7 +125,7 @@ public class RecordingInterceptor implements Interceptor {
 
         // No cached response - return 404 in replay mode
         logger.debug("REPLAY mode: No cached response, returning 404 for: {}", request.uri());
-        return new ProxyResponse(
+        return ProxyResponse.fromBytes(
                 404, Headers.of("Content-Type", "text/plain"), "Recording not found".getBytes());
     }
 

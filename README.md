@@ -357,7 +357,7 @@ WebReplayProxy proxy = WebReplayProxy.builder()
 proxy.start(8080);
 
 // Execute requests directly through the proxy API
-ProxyRequest request = new ProxyRequest(
+ProxyRequest request = ProxyRequest.fromBytes(
     "GET",
     URI.create("http://api.example.com/users"),
     Headers.of("Accept", "application/json"),
