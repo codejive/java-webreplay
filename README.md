@@ -31,6 +31,23 @@ Add as a dependency to your project:
 </dependency>
 ```
 
+## Running as Standalone Proxy
+
+You can run the proxy as a standalone application without writing any code:
+
+```bash
+# Run with defaults (CACHE mode on port 3128, storing to "proxy-cache")
+java -cp target/java-webreplay-0.0.1-SNAPSHOT.jar org.codejive.webreplay.Main
+```
+
+**Available options:**
+- `-p, --port <port>` - Port to run the proxy on (default: 3128)
+- `-d, --dir <directory>` - Directory for storing cached requests (default: proxy-cache)
+- `-m, --mode <mode>` - Replay mode: RECORD, CACHE, or REPLAY (default: CACHE)
+- `-h, --help` - Show help message
+
+Once running, configure your browser or application to use `localhost:<port>` as the HTTP/HTTPS proxy.
+
 ## Quick Start
 
 ### Basic Recording and Replay

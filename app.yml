@@ -14,8 +14,11 @@ links:
   documentation: https://github.com/codejive/java-webreplay/blob/main/README.md
 java: 21
 dependencies:
+- org.codejive.tproxy:tproxy:0.0.1-SNAPSHOT
+- com.google.code.gson:gson:2.11.0
 actions:
   clean: ./mvnw clean
-  build: ./mvnw spotless:apply package -DskipTests
+  build: ./mvnw spotless:apply install -DskipTests
   test: ./mvnw test
   format: ./mvnw spotless:apply
+  run: jbang org.codejive.webreplay:webreplay:0.0.1-SNAPSHOT

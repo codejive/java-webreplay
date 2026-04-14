@@ -59,3 +59,4 @@ test-recordings/
 *.class
 
 tproxy-ca.*
+proxy-cache/
